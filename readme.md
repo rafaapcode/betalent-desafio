@@ -9,8 +9,9 @@ Reposítório criado para o desafio da vaga de Desenvolvedor Back-End Júnior da
 - Node >= 20.x
 
 ## Passo a Passo para rodar o projeto
-- Primeiro faça o clone do repositório usando o `git clone`.
-- Com o repositório clonado acessa a pasta do projeto pelo terminar e instale todas as dependências usando o `npm install`.
+- Primeiro faça o clone do repositório usando o `git clone https://github.com/rafaapcode/betalent-desafio.git`.
+- Com o repositório clonado acesse a pasta do projeto pelo terminal e instale todas as dependências usando o `npm install`.
+- Antes de subir o nosso banco de dados e os nossos gateways, crie uma arquivo `.env` na raiz do projeto e use como exemplo as variáveis que deixei no arquivo `.env.example` preenchendo o valor das variáveis que estão faltando. Não se esqueça de preencher as variáveis de ambiente da imagem do **MYSQL** no arquivo `docker-compose.yml` 
 - Com as dependências instaladas e ainda na pasta do projeto iremos agora subir o MYSQL e os 2 GATEWAYS usando o docker compose. Para isso execute `docker-compose up -d`
 - Agora que o banco de dados está online e os 2 gateways também , iremos executar as migrações no DB e também executar os SEEDS. Primeiro iremos executar as migrações com o seguinte comando `node ace migrations:run`. Com as tabelas criadas agora iremos popular elas executando os SEEDS `node ace db:seed` 
 - Agora que todo o ambiente está preparado você pode rodar a API usando o `npm run dev`
@@ -20,7 +21,7 @@ Reposítório criado para o desafio da vaga de Desenvolvedor Back-End Júnior da
 # Docs - API
 
 ### Autenticação
-A API utiliza o BEARER TOKEN como o método de autenticação. Então nas rotas privadas é necessário passa o token pelo cabeçalho.
+A API utiliza o BEARER TOKEN como o método de autenticação. Então nas rotas privadas é necessário passar o token pelo cabeçalho.
 
 Exemplo de cabeçalho:
 ```http
