@@ -1,0 +1,21 @@
+services:
+  mysql:
+    image: mysql
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_DATABASE=app
+      - MYSQL_PASSWORD=
+
+  gateways:
+    image: matheusprotzen/gateways-mock
+    container_name: gateways
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "3001:3001"
+      - "3002:3002"
