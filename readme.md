@@ -1556,13 +1556,13 @@ Unauthorized access
 - Usei soft delete nos produtos e também clientes, pois acredito que todas as transações relacionadas a essas entidades ainda deveriam ser acessadas mesmo depois delas serem deletadas.
 - Para trabalhar com as prioridades dos GATEWAYS decidi usar números para as prioridades, ou seja, 1,2,3 ... Sendo o número 1 a prioridade maior e assim em diante. Pensei em implementar a prioridade baseada em STATUS (HIGH, MEDIUM e LOW) , porém pensando na adição de novos gateways essa abordagem não seria tão eficaz.
 - Para manter a modularidade e facilitar a adição de novos gateways, utilizei o DESIGN PATTTERN ADAPTER, onde basicamente eu adapto as resposta retornadas pelas APIs para o uso interno da nossa API. Para a criação de um novo GATEWAY você deve criar um novo adapter dentro da pasta `/app/gateways/adapters`, esse adapter deverá implementar a interface `PaymentGateway`. Após a criação do seu novo adapter, você deverá adicionar ele no factory que está no arquivo `/app/gateways/gateway_factory.ts` nesse arquivo temos um objeto chamado **GATEWAY_PRIORITY**, nele você irá colocar como CHAVE o nome do gateway que foi cadastrado no DB e como valor deverá instanciar o seu adapter, segue um exemplo :
-  - ```ts
-    const GATEWAY_PRIORITY: Record<string, PaymentGateway> = {
-      Nome_Gateway: new Gateway1Adapter(),
-      Nome_Gateway2: new Gateway2Adapter(),
-    }
-  ```
 
+```ts
+  const GATEWAY_PRIORITY: Record<string, PaymentGateway> = {
+    Nome_Gateway: new Gateway1Adapter(),
+    Nome_Gateway2: new Gateway2Adapter(),
+  }
+```
 
 ---
 
