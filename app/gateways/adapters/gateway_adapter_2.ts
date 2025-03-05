@@ -32,7 +32,10 @@ export class Gateway2Adapter implements PaymentGateway {
           statusCode: data.statusCode,
           body: {
             status: false,
-            message: data.erros[0].message,
+            message:
+              data.erros[0].message === 'contate a central do seu cartão'
+                ? 'Contact your credit card support'
+                : data.erros[0].message,
           },
         }
       }
@@ -62,8 +65,14 @@ export class Gateway2Adapter implements PaymentGateway {
         statusCode: error.response?.status || 500,
         body: {
           status: false,
-          message: error.message || 'Internal error',
-          data: error.response?.data || 'Internal error',
+          message:
+            (error.message === 'contate a central do seu cartão'
+              ? 'Contact your credit card support'
+              : error.message) || 'Internal error',
+          data:
+            (error.response?.data?.error === 'contate a central do seu cartão'
+              ? 'Contact your credit card support'
+              : error.response?.data.error) || 'Internal error',
         },
       }
     }
@@ -114,7 +123,7 @@ export class Gateway2Adapter implements PaymentGateway {
         statusCode: 200,
         body: {
           status: true,
-          message: 'Reembolso realizado com sucesso !',
+          message: 'Refund successfully processed!',
         },
       }
     } catch (error) {

@@ -54,8 +54,14 @@ export class Gateway1Adapter implements PaymentGateway {
         statusCode: error.response?.status || 500,
         body: {
           status: false,
-          message: error.message || 'Internal error',
-          data: error.response?.data || 'Internal error',
+          message:
+            (error.message === 'contate a central do seu cartão'
+              ? 'Contact your credit card support'
+              : error.message) || 'Internal error',
+          data:
+            (error.response?.data?.error === 'contate a central do seu cartão'
+              ? 'Contact your credit card support'
+              : error.response?.data.error) || 'Internal error',
         },
       }
     }

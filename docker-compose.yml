@@ -6,9 +6,10 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_USER=teste
+      - MYSQL_ROOT_PASSWORD=rafael
       - MYSQL_DATABASE=app
-      - MYSQL_PASSWORD=
+      - MYSQL_PASSWORD=root
 
   gateways:
     image: matheusprotzen/gateways-mock

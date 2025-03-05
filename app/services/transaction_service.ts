@@ -236,6 +236,7 @@ export default class TransactionService {
 
       if (body.status) {
         await this.updateTransactionStatusAndProductQuantity(transaction.id)
+
         return {
           statusCode,
           body,

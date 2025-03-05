@@ -1,5 +1,7 @@
 # Desafio BETALENT - Desenvolvedor Backend Júnior
 
+// Explicar sobre o motivo das prioridades e também sobre a modularidade e como adicionar novos gateways
+
 ## Objetivo
 
 Reposítório criado para o desafio da vaga de Desenvolvedor Back-End Júnior da BETALENT
@@ -11,12 +13,61 @@ Reposítório criado para o desafio da vaga de Desenvolvedor Back-End Júnior da
 ## Passo a Passo para rodar o projeto
 - Primeiro faça o clone do repositório usando o `git clone https://github.com/rafaapcode/betalent-desafio.git`.
 - Com o repositório clonado acesse a pasta do projeto pelo terminal e instale todas as dependências usando o `npm install`.
-- Antes de subir o nosso banco de dados e os nossos gateways, crie uma arquivo `.env` na raiz do projeto e use como exemplo as variáveis que deixei no arquivo `.env.example` preenchendo o valor das variáveis que estão faltando. Não se esqueça de preencher as variáveis de ambiente da imagem do **MYSQL** no arquivo `docker-compose.yml` 
+- Antes de subir o nosso banco de dados e os nossos gateways, crie uma arquivo `.env` na raiz do projeto e use como exemplo as variáveis que deixei no arquivo `.env.example` preenchendo o valor das variáveis que estão faltando. 
 - Com as dependências instaladas e ainda na pasta do projeto iremos agora subir o MYSQL e os 2 GATEWAYS usando o docker compose. Para isso execute `docker-compose up -d`
 - Agora que o banco de dados está online e os 2 gateways também , iremos executar as migrações no DB e também executar os SEEDS. Primeiro iremos executar as migrações com o seguinte comando `node ace migrations:run`. Com as tabelas criadas agora iremos popular elas executando os SEEDS `node ace db:seed` 
 - Agora que todo o ambiente está preparado você pode rodar a API usando o `npm run dev`
 
 ---
+
+## Dados mockados
+
+- Como expliquei anterior fazemos o SEED, ou seja, populamos o nosso banco de dados com alguns dados mockados para conseguirmos usar a api.
+- Irei listar aqui somente os usuário e o nome dos GATEWAYS que estamos adicionando, mas se quiser ver todos os outros dados que são adicionadoss acesse a pasta `database/seeders`
+
+### Gateways
+```json
+[
+  {
+    "name": "Gateway_1",
+    "is_active": true,
+    "priority": 1,
+  },
+  {
+    "name": "Gateway_2",
+    "is_active": true,
+    "priority": 2,
+  },
+]
+
+```
+
+### Users
+```json
+[
+  {
+    "email": "rafaap2003@gmail.com",
+    "role": "ADMIN",
+    "password": "teste123",
+  },
+  {
+    "email": "rafaap2003manager@gmail.com",
+    "role": "MANAGER",
+    "password": "teste123",
+  },
+  {
+    "email": "rafaap2003finance@gmail.com",
+    "role": "FINANCE",
+    "password": "teste123",
+  },
+  {
+    "email": "rafaap2003user@gmail.com",
+    "role": "USER",
+    "password": "teste123",
+  },
+]
+
+```
 
 # Docs - API
 
@@ -146,7 +197,7 @@ Base URL: `http://localhost:3333`
 ```json
 {
 	"status": false,
-	"message": "contate a central do seu cartão"
+	"message": "Contact your credit card support"
 }
 ```
 
@@ -211,7 +262,7 @@ Para a criação de um número de cartão de crédito válido recomendo utilizar
 
 
 - ### Criar Usuário
-- 
+
 **Descrição:** Criação de um usuário.
 
 **Rota:** `POST /user`
@@ -259,8 +310,8 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
-Unauthorized access
+```
+  Unauthorized access
 ```
 
 **status:** `422`
@@ -281,7 +332,7 @@ Unauthorized access
 
 
 - ### Atualizar Usuário
-- 
+
 **Descrição:** Atualiza o ROLE de um usuário.
 
 **Rota:** `PATCH /user/:email`
@@ -327,7 +378,7 @@ Authorization: Bearer <your-token>
 
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -362,7 +413,7 @@ Unauthorized access
 ```
 
 - ### Deletar Usuário
-- 
+
 **Descrição:** Deleta um usuário
 
 **Rota:** `DELETE /user/:email`
@@ -394,7 +445,7 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -408,7 +459,7 @@ Unauthorized access
 
 
 - ### Lista Usuários
-- 
+
 **Descrição:** Listar um usuário
 
 **Rota:** `GET /user/:emailOrId`
@@ -446,7 +497,7 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -459,7 +510,7 @@ Unauthorized access
 ```
 
 - ### Lista todos os Usuários
-- 
+
 **Descrição:** Listar todos usuários
 
 **Rota:** `GET /user`
@@ -491,7 +542,7 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -505,7 +556,7 @@ Unauthorized access
 
 
 - ### Criar Cliente
-- 
+
 **Descrição:** Criação de um cliente.
 
 **Rota:** `POST /clients`
@@ -548,7 +599,7 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -567,10 +618,10 @@ Unauthorized access
 
 
 - ### Atualizar Cliente
-- 
-**Descrição:** Atualiza o email de um cliente.
 
-**Rota:** `PATCH /clients/:email`
+**Descrição:** Atualiza o email/nome de um cliente.
+
+**Rota:** `PUT /clients/:email`
 
 **Autenticação**
 ```http
@@ -609,7 +660,7 @@ Authorization: Bearer <your-token>
 
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -636,7 +687,7 @@ Unauthorized access
 ```
 
 - ### Deletar Cliente
-- 
+
 **Descrição:** Deleta um cliente
 
 **Rota:** `DELETE /clients/:email`
@@ -668,7 +719,7 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -682,7 +733,7 @@ Unauthorized access
 
 
 - ### Listar Cliente
-- 
+
 **Descrição:** Listar um cliente
 
 **Rota:** `GET /clients/:emailOrName`
@@ -720,7 +771,7 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -733,7 +784,7 @@ Unauthorized access
 ```
 
 - ### Lista todos os Clientes
-- 
+
 **Descrição:** Listar todos clientes
 
 **Rota:** `GET /clients`
@@ -766,13 +817,13 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
 
 - ### Lista os detalhes do cliente
-- 
+
 **Descrição:** Lista todas as informações de um cliente juntamente com suas compras relizadas
 
 **Rota:** `GET /clients/details/:email`
@@ -828,7 +879,7 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -849,7 +900,7 @@ Unauthorized access
 
 
 - ### Criar Produto
-- 
+
 **Descrição:** Criação de um produto.
 
 **Rota:** `POST /product`
@@ -899,7 +950,7 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -918,7 +969,7 @@ Unauthorized access
 
 
 - ### Atualizar Produto
-- 
+
 **Descrição:** Atualiza os dados de um produto.
 
 **Rota:** `PUT /product/:id`
@@ -971,7 +1022,7 @@ Authorization: Bearer <your-token>
 
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -1001,7 +1052,7 @@ Unauthorized access
 ```
 
 - ### Deletar Produto
-- 
+
 **Descrição:** Deleta um produto
 
 **Rota:** `DELETE /product/:id`
@@ -1033,7 +1084,7 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -1047,7 +1098,7 @@ Unauthorized access
 
 
 - ### Listar Produto
-- 
+
 **Descrição:** Listar um produto
 
 **Rota:** `GET /product/:idOrName`
@@ -1087,7 +1138,7 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -1100,7 +1151,7 @@ Unauthorized access
 ```
 
 - ### Lista todos os Produtos
-- 
+
 **Descrição:** Listar todos produtos
 
 **Rota:** `GET /product`
@@ -1179,7 +1230,7 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -1193,7 +1244,7 @@ Unauthorized access
 
 
 - ### Ativar/Desativa um gateway
-- 
+
 **Descrição:** Este endpoint desativa um gateway caso ele esteja ativado e vice-versa.
 
 **Rota:** `GET /gateway/toggle/:gatewayName`
@@ -1219,14 +1270,14 @@ Authorization: Bearer <your-token>
 ```json
 {
 	"status": true,
-	"message": "Gateway activated successfully"
+	"message": "Gateway activated/deactivated successfully"
 }
 ```
 
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -1241,7 +1292,7 @@ Unauthorized access
 
 
 - ### Mudar a prioridade de um gateway
-- 
+
 **Descrição:** Este endpoint muda a prioridade de um gateway. Se a mudança ocorrer de uma gateway de prioridade 1 para 2, o gateway que tinha a prioridade 1 ficará com a prioridade 2 e o que tinha a prioridade 2 ficará com a 1. Basicamente as prioridades são invertidas.
 
 **Rota:** `POST /gateway/priority/:gatewayName`
@@ -1257,7 +1308,7 @@ Authorization: Bearer <your-token>
 
 | chave  | Tipo    | Descrição  |
 | ------ | --------- |--------- |
-| gatewayName  | string | Nome do gateway a ser **ativado/desativado** |
+| gatewayName  | string | Nome do gateway a ter a prioridade trocada |
 
 
 
@@ -1283,7 +1334,7 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -1306,7 +1357,7 @@ Unauthorized access
 
 
 - ### Listar todas transações
-- 
+
 **Descrição:** Este endpoint lista todas as transações que ocorreram.
 
 **Rota:** `GET /transactions`
@@ -1343,14 +1394,14 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
 
 
 - ### Buscar detalhes da transação
-- 
+
 **Descrição:** Este endpoint retorna os detalhes de uma transação em específico.
 
 **Rota:** `GET /transactions/:transactionId`
@@ -1390,8 +1441,8 @@ Authorization: Bearer <your-token>
 		"updatedAt": "2025-03-03T10:34:59.000+00:00",
 		"client": {
 			"id": "01955b92-b2ce-757e-a4a9-a66c0fc81d71",
-			"name": "Capitao teste gancho",
-			"email": "caitateste@ogamil.com"
+			"name": "teste user",
+			"email": "teste@ogamil.com"
 		},
 		"product": {
 			"id": "01955b87-1387-7041-9c6a-0d3f1e1ad77f",
@@ -1409,7 +1460,7 @@ Authorization: Bearer <your-token>
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -1424,8 +1475,8 @@ Unauthorized access
 
 
 - ### Reembolso
-- 
-**Descrição:** Realiza o reembolso de um transação
+
+**Descrição:** Realiza o reembolso de uma transação
 
 **Rota:** `GET /transactions/refund/:transactionId`
 
@@ -1454,18 +1505,27 @@ Authorization: Bearer <your-token>
 		"amount": 90,
 		"card_first_digits": "5171",
 		"card_last_digits": "8518",
-		"email": "caitateste@ogamil.com",
+		"email": "teste@ogamil.com",
 		"id": "0b5f5040-9a11-49be-8662-7f798f644136",
-		"name": "Capitao teste gancho",
+		"name": "teste user",
 		"status": "charged_back"
 	}
+}
+```
+OU
+
+**status:** `200`
+```json
+{
+	"status": true,
+	"message": "Refund successfully processed!"
 }
 ```
 
 **Resposta de Erro:**
 
 **status:** `401`
-```json
+```
 Unauthorized access
 ```
 
@@ -1501,10 +1561,11 @@ Unauthorized access
 - Acredito que consegui implementar todas as funcionalidades requeridas , porém não consegui seguir o TDD e também não consegui criar uma imagem docker da aplicação. Porém as funcionalidades estão em perfeito funcionamento.
 
 ---
+
+
+## HTTP Status Code
+
 ```
-
----
-
 ## Códigos de Status
 
 | Código | Significado |
